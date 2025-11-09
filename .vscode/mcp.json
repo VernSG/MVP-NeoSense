@@ -1,0 +1,54 @@
+{
+	"servers": {
+		"shadcn-ui-server": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"shadcn-ui-mcp-server"
+			],
+			"type": "stdio"
+		},
+		"tailwindcss-server": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"tailwindcss-mcp-server"
+			],
+			"type": "stdio"
+		},
+		"nextjs-mcp-server": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"nextjs-mcp-server@0.2.2"
+			],
+			"cwd": "${workspaceFolder}",
+			"env": {}
+		},
+		"iconify": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"iconify-mcp-server@latest"
+			],
+			"type": "stdio"
+		},
+		"typescript": {
+			"command": "npx",
+			"args": [
+				"typescript-mcp"
+			],
+			"type": "stdio"
+		},
+		"react-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"react-mcp@0.0.1"
+			],
+			"cwd": "${workspaceFolder}",
+			"env": {}
+		}
+	},
+	"inputs": []
+}
