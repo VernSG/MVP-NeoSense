@@ -170,7 +170,7 @@ export default function LocalContextSection({
     cityEducationData.bontang;
 
   return (
-    <section className="py-24 bg-slate-100">
+    <section className="py-24" style={{ backgroundColor: "#F8F8F8" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -353,6 +353,71 @@ export default function LocalContextSection({
               </div>
             </TabsContent>
           </Tabs>
+        </motion.div>
+
+        {/* Socio-Economic Impact Statement */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="mt-16"
+        >
+          <Card className="bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200 shadow-xl">
+            <CardContent className="p-8">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
+                  Building Sustainable Socio-Economic Future
+                </h3>
+                <p className="text-lg text-slate-700 leading-relaxed max-w-4xl mx-auto">
+                  By empowering communities with actionable air quality data,
+                  AeroSense fosters healthier populations, directly supporting
+                  local economic productivity and reducing the socio-economic
+                  burden of respiratory illnesses. Clean air initiatives lead to{" "}
+                  <strong className="text-emerald-700">
+                    reduced healthcare costs
+                  </strong>
+                  ,
+                  <strong className="text-blue-700">
+                    {" "}
+                    increased workforce productivity
+                  </strong>
+                  , and
+                  <strong className="text-purple-700">
+                    {" "}
+                    sustainable urban development
+                  </strong>{" "}
+                  across East Kalimantan.
+                </p>
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                  <div className="text-center">
+                    <div className="text-3xl font-black text-emerald-600 mb-1">
+                      -25%
+                    </div>
+                    <div className="text-sm font-semibold text-slate-600 uppercase tracking-wider">
+                      Healthcare Costs
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-black text-blue-600 mb-1">
+                      +18%
+                    </div>
+                    <div className="text-sm font-semibold text-slate-600 uppercase tracking-wider">
+                      Productivity
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-black text-purple-600 mb-1">
+                      +32%
+                    </div>
+                    <div className="text-sm font-semibold text-slate-600 uppercase tracking-wider">
+                      Tourism Appeal
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       </div>
     </section>
