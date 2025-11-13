@@ -2,20 +2,23 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
-  selectedCity: string;
-  onCityChange: (city: string) => void;
+  selectedCity?: string;
+  onCityChange?: (city: string) => void;
 }
 
-const cities = [
-  { id: "bontang", name: "Bontang", region: "East Kalimantan" },
-  { id: "samarinda", name: "Samarinda", region: "East Kalimantan" },
-  { id: "balikpapan", name: "Balikpapan", region: "East Kalimantan" },
+const navigationLinks = [
+  { href: "/city", label: "Home", description: "Air Quality Dashboard" },
+  { href: "/newsroom", label: "Newsroom", description: "Latest Updates" },
+  { href: "/health-guide", label: "Health Guide", description: "Health Tips & Information" },
 ];
 
 export default function Header({ selectedCity, onCityChange }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-zinc-200">
@@ -34,26 +37,31 @@ export default function Header({ selectedCity, onCityChange }: HeaderProps) {
             <span className="text-xl font-bold text-zinc-900">AeroSense</span>
           </motion.div>
 
-          {/* Desktop City Navigation */}
+          {/* Desktop Page Navigation */}
           <motion.nav
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="hidden md:flex items-center space-x-1 bg-zinc-100 rounded-lg p-1"
           >
-            {cities.map((city) => (
-              <button
-                key={city.id}
-                onClick={() => onCityChange(city.id)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  selectedCity === city.id
-                    ? "bg-white text-zinc-900 shadow-sm"
-                    : "text-zinc-600 hover:text-zinc-900 hover:bg-white/50"
-                }`}
-              >
-                {city.name}
-              </button>
-            ))}
+            {navigationLinks.map((link) => {
+              const isActive = pathname === link.href || 
+                (link.href === "/city" && pathname === "/");
+              
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "bg-white text-zinc-900 shadow-sm"
+                      : "text-zinc-600 hover:text-zinc-900 hover:bg-white/50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </motion.nav>
 
           {/* Mobile Menu Button */}
@@ -92,25 +100,28 @@ export default function Header({ selectedCity, onCityChange }: HeaderProps) {
         >
           <div className="container mx-auto px-4 py-4">
             <div className="space-y-2">
-              {cities.map((city) => (
-                <button
-                  key={city.id}
-                  onClick={() => {
-                    onCityChange(city.id);
-                    setIsMenuOpen(false);
-                  }}
-                  className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    selectedCity === city.id
-                      ? "bg-zinc-100 text-zinc-900"
-                      : "text-zinc-600 hover:bg-zinc-50"
-                  }`}
-                >
-                  <div className="flex flex-col">
-                    <span>{city.name}</span>
-                    <span className="text-xs text-zinc-500">{city.region}</span>
-                  </div>
-                </button>
-              ))}
+              {navigationLinks.map((link) => {
+                const isActive = pathname === link.href || 
+                  (link.href === "/city" && pathname === "/");
+                
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`w-full block text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-zinc-100 text-zinc-900"
+                        : "text-zinc-600 hover:bg-zinc-50"
+                    }`}
+                  >
+                    <div className="flex flex-col">
+                      <span>{link.label}</span>
+                      <span className="text-xs text-zinc-500">{link.description}</span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </motion.div>

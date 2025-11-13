@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import { useCityContext } from "@/contexts/CityContext";
 import AQIHeroSection from "@/components/sections/HeroSection";
 import AQITrendChart from "@/components/sections/AQITrendChart";
 import SmartRecommendationsSection from "@/components/sections/SmartRecommendationsSection";
@@ -10,25 +9,16 @@ import AirQualityMapSection from "@/components/sections/MapWrapper";
 import FooterSection from "@/components/sections/FooterSection";
 
 export default function City() {
-  const [selectedCity, setSelectedCity] = useState("bontang");
-
-  const handleCityChange = (city: string) => {
-    setSelectedCity(city);
-  };
+  const { selectedCity } = useCityContext();
 
   return (
-    <main className="min-h-screen bg-slate-900">
-      <Sidebar selectedCity={selectedCity} onCityChange={handleCityChange} />
-
-      {/* Main Content - offset for sidebar on desktop */}
-      <div className="lg:ml-80">
-        <AQIHeroSection selectedCity={selectedCity} />
-        <AQITrendChart selectedCity={selectedCity} />
-        <SmartRecommendationsSection selectedCity={selectedCity} />
-        <LocalContextSection selectedCity={selectedCity} />
-        <AirQualityMapSection />
-        <FooterSection />
-      </div>
-    </main>
+    <>
+      <AQIHeroSection selectedCity={selectedCity} />
+      <AQITrendChart selectedCity={selectedCity} />
+      <SmartRecommendationsSection selectedCity={selectedCity} />
+      <LocalContextSection selectedCity={selectedCity} />
+      <AirQualityMapSection />
+      <FooterSection />
+    </>
   );
 }

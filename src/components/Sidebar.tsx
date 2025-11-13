@@ -4,42 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Menu, X } from "lucide-react";
 import { useState } from "react";
-
-interface City {
-  id: string;
-  name: string;
-  province: string;
-  aqi: number;
-  status: "Good" | "Moderate" | "Unhealthy";
-  color: string;
-}
-
-const cities: City[] = [
-  {
-    id: "bontang",
-    name: "Bontang",
-    province: "East Kalimantan",
-    aqi: 45,
-    status: "Good",
-    color: "bg-emerald-500",
-  },
-  {
-    id: "samarinda",
-    name: "Samarinda",
-    province: "East Kalimantan",
-    aqi: 78,
-    status: "Moderate",
-    color: "bg-yellow-500",
-  },
-  {
-    id: "balikpapan",
-    name: "Balikpapan",
-    province: "East Kalimantan",
-    aqi: 125,
-    status: "Unhealthy",
-    color: "bg-red-500",
-  },
-];
+import { CITIES_DATA } from "@/data/airQualityData";
 
 interface SidebarProps {
   selectedCity: string;
@@ -67,7 +32,7 @@ export default function Sidebar({ selectedCity, onCityChange }: SidebarProps) {
           Select City
         </h2>
         <div className="space-y-3">
-          {cities.map((city) => (
+          {CITIES_DATA.map((city) => (
             <motion.button
               key={city.id}
               onClick={() => {
@@ -95,7 +60,7 @@ export default function Sidebar({ selectedCity, onCityChange }: SidebarProps) {
                 <div className="text-right">
                   <div className="flex items-center gap-3 mb-1">
                     <div
-                      className={`w-3 h-3 rounded-full ${city.color} shadow-lg`}
+                      className={`w-3 h-3 rounded-full ${city.dotColor} shadow-lg`}
                     />
                     <span className="text-white font-black text-2xl tracking-tight">
                       {city.aqi}

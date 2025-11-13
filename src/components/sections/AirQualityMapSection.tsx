@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Wind, Thermometer, Droplets, Eye } from "lucide-react";
 import dynamic from "next/dynamic";
+import { CITIES_DATA } from "@/data/airQualityData";
 
 const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
   ssr: false,
@@ -18,60 +19,24 @@ const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
   ),
 });
 
-// Air quality data for East Kalimantan cities
-const airQualityData = [
-  {
-    city: "Samarinda",
-    lat: -0.5017,
-    lng: 117.1536,
-    aqi: 52,
-    pm25: 19.9,
-    status: "Moderate",
-    temperature: 25,
-    humidity: 95,
-    windSpeed: 3.9,
-    visibility: 10,
-    color: "#FFFF00", // Yellow for Moderate
-    description: "Capital city of East Kalimantan Province",
-    population: "827,994",
-    mainPollutant: "PM2.5",
-    trend: "stable",
-  },
-  {
-    city: "Bontang",
-    lat: 0.1344,
-    lng: 117.4758,
-    aqi: 45,
-    pm25: 15.2,
-    status: "Good",
-    temperature: 24,
-    humidity: 90,
-    windSpeed: 4.2,
-    visibility: 12,
-    color: "#00E400", // Green for Good
-    description: "Industrial city known for petrochemical plants",
-    population: "178,917",
-    mainPollutant: "PM10",
-    trend: "improving",
-  },
-  {
-    city: "Balikpapan",
-    lat: -1.2379,
-    lng: 116.8289,
-    aqi: 38,
-    pm25: 12.8,
-    status: "Good",
-    temperature: 26,
-    humidity: 88,
-    windSpeed: 3.5,
-    visibility: 11,
-    color: "#00E400", // Green for Good
-    description: "Major oil refining center and port city",
-    population: "688,318",
-    mainPollutant: "NO2",
-    trend: "stable",
-  },
-];
+// Transform city data for map component compatibility
+const airQualityData = CITIES_DATA.map((city) => ({
+  city: city.name,
+  lat: city.lat,
+  lng: city.lng,
+  aqi: city.aqi,
+  pm25: city.pm25,
+  status: city.status,
+  temperature: city.temperature,
+  humidity: city.humidity,
+  windSpeed: city.windSpeed,
+  visibility: city.visibility,
+  color: city.color,
+  description: city.description,
+  population: city.population,
+  mainPollutant: city.mainPollutant,
+  trend: city.trend,
+}));
 
 const AirQualityMapSection = () => {
   const [selectedCity, setSelectedCity] = useState(airQualityData[0]);

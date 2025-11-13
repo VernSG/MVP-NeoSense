@@ -3,71 +3,14 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Wind, Thermometer, Droplets, Eye, AlertCircle } from "lucide-react";
+import { CITIES_DATA, getCityById } from "@/data/airQualityData";
 
 interface AQIHeroSectionProps {
   selectedCity: string;
 }
 
-// Enhanced city data with better visual design
-const cityData = {
-  bontang: {
-    name: "Bontang",
-    aqi: 45,
-    status: "Good",
-    statusColor: "text-emerald-600",
-    bgColor: "from-emerald-500/10 to-green-600/20",
-    borderColor: "border-emerald-500/30",
-    dotColor: "bg-emerald-500",
-    image: "https://images.unsplash.com/photo-1586348943529-beaae6c28db9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-    cigarettes: 0.6,
-    pm25: 12.5,
-    temperature: 28,
-    humidity: 75,
-    windSpeed: 15,
-    visibility: 12.8,
-    healthRisk: "Low",
-    recommendation: "Perfect conditions for outdoor activities",
-  },
-  samarinda: {
-    name: "Samarinda",
-    aqi: 78,
-    status: "Moderate",
-    statusColor: "text-yellow-600",
-    bgColor: "from-yellow-500/10 to-orange-500/20",
-    borderColor: "border-yellow-500/30",
-    dotColor: "bg-yellow-500",
-    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-    cigarettes: 1.2,
-    pm25: 25.8,
-    temperature: 31,
-    humidity: 82,
-    windSpeed: 8,
-    visibility: 8.5,
-    healthRisk: "Moderate",
-    recommendation: "Sensitive groups should limit outdoor exposure",
-  },
-  balikpapan: {
-    name: "Balikpapan",
-    aqi: 125,
-    status: "Unhealthy",
-    statusColor: "text-red-600",
-    bgColor: "from-red-500/10 to-orange-600/20",
-    borderColor: "border-red-500/30",
-    dotColor: "bg-red-500",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-    cigarettes: 2.1,
-    pm25: 45.2,
-    temperature: 29,
-    humidity: 88,
-    windSpeed: 4,
-    visibility: 5.2,
-    healthRisk: "High",
-    recommendation: "Avoid outdoor activities, wear N95 masks",
-  },
-};
-
 export default function AQIHeroSection({ selectedCity }: AQIHeroSectionProps) {
-  const currentData = cityData[selectedCity as keyof typeof cityData] || cityData.bontang;
+  const currentData = getCityById(selectedCity) || CITIES_DATA[0];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
