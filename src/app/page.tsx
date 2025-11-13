@@ -1,10 +1,6 @@
-import AirQualityMapSection from "@/components/sections/AirQualityMapSection";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="">
-      {/* <MainSection /> */}
-      <AirQualityMapSection />
-    </div>
-  );
+  // Redirect to /city as the main page
+  redirect("/city");
 }
