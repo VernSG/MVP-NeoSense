@@ -38,7 +38,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ cities, onCitySelect }) => {
     }
 
     // Import and initialize Leaflet with CSS
-    Promise.all([import("leaflet"), import("leaflet/dist/leaflet.css")])
+    Promise.all([import("leaflet")])
       .then(([L]) => {
         // Fix for default markers in Next.js
         delete (L.Icon.Default.prototype as any)._getIconUrl;
