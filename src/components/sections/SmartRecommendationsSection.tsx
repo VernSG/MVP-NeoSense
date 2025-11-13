@@ -19,160 +19,46 @@ import {
   Activity,
   Clock,
   MapPin,
-  TreePine,
-  Car,
 } from "lucide-react";
+import { CITIES_DATA, getCityById } from "@/data/airQualityData";
 
 interface SmartRecommendationsProps {
   selectedCity: string;
 }
 
-// Recommendations based on AQI levels and city-specific conditions
-const recommendations = {
-  bontang: {
-    aqi: 78,
-    status: "Moderate",
-    color: "yellow",
-    generalAdvice:
-      "Air quality is acceptable for most people, but sensitive individuals may experience minor issues.",
-    activities: [
-      {
-        icon: Activity,
-        title: "Outdoor Exercise",
-        advice: "Moderate intensity activities are okay",
-        status: "caution",
-        description:
-          "Reduce prolonged or heavy outdoor activities if you experience symptoms.",
-      },
-      {
-        icon: Users,
-        title: "Sensitive Groups",
-        advice: "Consider reducing outdoor activities",
-        status: "warning",
-        description:
-          "Children, elderly, and people with respiratory conditions should limit outdoor exposure.",
-      },
-      {
-        icon: Wind,
-        title: "Windows & Ventilation",
-        advice: "Keep windows closed during peak hours",
-        status: "caution",
-        description:
-          "Use air purifiers indoors and limit natural ventilation during high pollution periods.",
-      },
-    ],
-    healthTips: [
-      "Stay hydrated and monitor air quality regularly",
-      "Consider wearing N95 masks outdoors if sensitive",
-      "Keep rescue medications accessible for those with asthma",
-      "Industrial emissions peak during evening hours",
-    ],
-    localContext:
-      "Bontang's air quality is influenced by industrial emissions from petrochemical plants and marine haze from nearby coastal areas.",
-  },
-  samarinda: {
-    aqi: 95,
-    status: "Moderate",
-    color: "yellow",
-    generalAdvice:
-      "Air quality is acceptable, but may pose concerns for people who are unusually sensitive to air pollution.",
-    activities: [
-      {
-        icon: Activity,
-        title: "Outdoor Exercise",
-        advice: "Light to moderate activities acceptable",
-        status: "caution",
-        description:
-          "Avoid strenuous outdoor activities during peak traffic hours.",
-      },
-      {
-        icon: Users,
-        title: "Sensitive Groups",
-        advice: "Limit prolonged outdoor activities",
-        status: "warning",
-        description:
-          "Children and adults with respiratory conditions should reduce outdoor time.",
-      },
-      {
-        icon: Home,
-        title: "Indoor Air Quality",
-        advice: "Use air purifiers and keep windows closed",
-        status: "caution",
-        description:
-          "Maintain clean indoor air, especially during coal dust events.",
-      },
-    ],
-    healthTips: [
-      "Monitor symptoms closely if you have respiratory conditions",
-      "Avoid outdoor activities near major roads during rush hours",
-      "Consider air-filtering plants for indoor spaces",
-      "Coal dust is highest during dry season (June-September)",
-    ],
-    localContext:
-      "Samarinda experiences elevated pollution from coal mining dust, transportation emissions, and seasonal burning activities.",
-  },
-  balikpapan: {
-    aqi: 112,
-    status: "Unhealthy for Sensitive Groups",
-    color: "orange",
-    generalAdvice:
-      "Members of sensitive groups may experience health effects. The general public is not likely to be affected.",
-    activities: [
-      {
-        icon: Activity,
-        title: "Outdoor Exercise",
-        advice: "Avoid strenuous outdoor activities",
-        status: "danger",
-        description:
-          "Limit outdoor exercise to early morning hours when pollution is typically lower.",
-      },
-      {
-        icon: Users,
-        title: "Sensitive Groups",
-        advice: "Avoid all outdoor activities",
-        status: "danger",
-        description:
-          "Children, elderly, and people with heart/lung conditions should stay indoors.",
-      },
-      {
-        icon: Shield,
-        title: "Protection Measures",
-        advice: "Wear N95 masks when outdoors",
-        status: "warning",
-        description:
-          "Use high-efficiency air filtration and consider postponing outdoor events.",
-      },
-    ],
-    healthTips: [
-      "Mandatory mask use for all outdoor activities",
-      "Keep windows and doors closed at all times",
-      "Run air purifiers continuously",
-      "Port and refinery emissions peak during night shifts",
-    ],
-    localContext:
-      "Balikpapan's air quality is significantly impacted by port activities, oil refinery emissions, and heavy vehicle traffic.",
-  },
+// Icon mapping for activities
+const iconMap: Record<string, any> = {
+  Activity,
+  Users,
+  Wind,
+  Shield,
+  Home,
 };
 
-const statusColors = {
-  yellow: {
-    bg: "bg-yellow-50/80",
-    border: "border-yellow-300",
-    text: "text-yellow-900",
-    icon: "text-yellow-700",
-  },
-  orange: {
-    bg: "bg-orange-50/90",
-    border: "border-orange-300",
-    text: "text-orange-900",
-    icon: "text-orange-700",
-  },
-  red: {
-    bg: "bg-red-50/90",
-    border: "border-red-300",
-    text: "text-red-900",
-    icon: "text-red-700",
-  },
+// Status colors mapping based on AQI status
+const getStatusColors = (status: string) => {
+  if (status === "Good") {
+    return {
+      bg: "bg-green-50/80",
+      border: "border-green-300",
+      text: "text-green-900",
+      icon: "text-green-700",
+    };
+  } else if (status === "Moderate") {
+    return {
+      bg: "bg-yellow-50/80",
+      border: "border-yellow-300",
+      text: "text-yellow-900",
+      icon: "text-yellow-700",
+    };
+  } else {
+    return {
+      bg: "bg-red-50/90",
+      border: "border-red-300",
+      text: "text-red-900",
+      icon: "text-red-700",
+    };
+  }
 };
 
 const activityStatusIcons = {
@@ -192,11 +78,8 @@ const activityStatusColors = {
 export default function SmartRecommendationsSection({
   selectedCity,
 }: SmartRecommendationsProps) {
-  const currentData =
-    recommendations[selectedCity as keyof typeof recommendations] ||
-    recommendations.bontang;
-  const colorScheme =
-    statusColors[currentData.color as keyof typeof statusColors];
+  const currentData = getCityById(selectedCity) || CITIES_DATA[0];
+  const colorScheme = getStatusColors(currentData.status);
 
   return (
     <section className="py-24" style={{ backgroundColor: "#FAFAFA" }}>
@@ -281,6 +164,7 @@ export default function SmartRecommendationsSection({
                 activityStatusColors[
                   activity.status as keyof typeof activityStatusColors
                 ];
+              const ActivityIcon = iconMap[activity.icon] || Activity;
 
               return (
                 <motion.div
@@ -293,7 +177,7 @@ export default function SmartRecommendationsSection({
                   <Card className="h-full bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
                     <CardHeader className="pb-4">
                       <div className="flex items-center space-x-3 mb-3">
-                        <activity.icon className="h-6 w-6 text-zinc-700" />
+                        <ActivityIcon className="h-6 w-6 text-zinc-700" />
                         <CardTitle className="text-lg">
                           {activity.title}
                         </CardTitle>
