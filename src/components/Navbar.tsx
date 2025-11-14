@@ -32,24 +32,14 @@ const navigationItems = [
     icon: Home,
   },
   {
-    title: "Genre",
-    href: "/genre",
+    title: "Berita",
+    href: "/city",
     icon: Layers,
   },
   {
-    title: "Pustaka",
-    href: "/pustaka",
+    title: "City",
+    href: "/city",
     icon: Book,
-  },
-  {
-    title: "Berwarna",
-    href: "/berwarna",
-    icon: Book,
-  },
-  {
-    title: "Download APK",
-    href: "https://drive.google.com/file/d/1cnOHToJFWRedzmGZfMukRzs3UP-REqvs/view?usp=sharing",
-    icon: Download,
   },
 ];
 
