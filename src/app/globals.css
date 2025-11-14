@@ -240,3 +240,18 @@
   height: 100% !important;
   width: 100% !important;
 }
+
+/* Navbar z-index override to ensure it's always on top */
+nav,
+.navbar,
+[data-navbar],
+header[role="banner"],
+.fixed-navbar {
+  z-index: 9999 !important;
+}
+
+/* Ensure body has proper spacing for fixed navbar */
+body {
+  margin: 0;
+  padding: 0;
+}
